@@ -10,8 +10,8 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
-    server: {
-        https: true,
-        host: "https://simple-task-app-iota.vercel.app/",
-    },
+    // server: {
+    //     https: true,
+    //     host: "https://simple-task-app-iota.vercel.app/",
+    // },
 });

@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (env('APP_ENV') !== 'local') {
-            URL::forceScheme('https'); // Force all Laravel-generated URLs to use HTTPS
-        }
+        // if (env('APP_ENV') !== 'local') {
+        //     URL::forceScheme('https'); // Force all Laravel-generated URLs to use HTTPS
+        // }
     }
 }

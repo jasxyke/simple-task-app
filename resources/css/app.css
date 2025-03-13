@@ -1,4 +1,12 @@
 @import "tailwindcss";
+@source "../views";
+@source "../views/tasks";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
 
 @theme {
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
@@ -11,13 +19,16 @@
 }
 
 :root {
-    --primary: #f1f0e9;
-    --secondary: #e9762b;
-    --dimGreen: #41644a;
-    --darkGreen: #0d4715;
+    --primary: "#F1F0E9";
+    --secondary: "#E9762B";
+    --dimGreen: "#41644A";
+    --darkGreen: "#0D4715";
 }
 
-/* General Layout */
+/* p {
+    color: #f1f0e9;
+} */
+
 .main-container {
     display: flex;
     justify-content: center;
@@ -25,14 +36,13 @@
     height: 100dvh;
 }
 
-/* Tasks Table */
 .tasks-table {
     background-color: aqua;
 }
 
-/* Buttons */
 .button {
     padding: 10px 20px;
+
     text-align: center;
-    background-color: var(--primary); /* ✅ Correct Usage */
+    background-color: "#F1F0E9";
 }
