@@ -7,88 +7,90 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Simple Task Management Application</title>
 
+    {{-- CSS --}}
+    @vite('resources/css/app.css')
+    {{-- <link rel="stylesheet" href="https://simple-task-app-git-main-jasxykes-projects.vercel.app/resources/css/app.css" /> --}}
     {{-- jQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <section style="display: flex; height: 100dvh; padding: 10px;">
-        <div
-            style="width: 100%; height: 100%; min-height: 500px; max-width: 66.67%; margin: auto; padding: 20px; background-color: var(--primary); border-radius: 8px;">
-            <div style="display: flex; justify-content: space-between;">
-                <p style="font-size: 1.875rem;">To-do List</p>
-                <button id="openCreateModal"
-                    style="padding: 10px 20px; background-color: var(--darkGreen); color: white; border-radius: 4px; cursor: pointer;">
-                    Add Task
-                </button>
+    <section class="flex h-dvh lg:p-10">
+        <div class="w-full h-full lg:h-auto lg:min-h-[500px] lg:w-2/3 m-auto p-5 bg-primary rounded-lg">
+            <div class="flex justify-between">
+                <p class="text-3xl">To-do List</p>
+                <button id="openCreateModal" class="button bg-darkGreen text-white rounded-md cursor-pointer">Add
+                    Task</button>
             </div>
-            <div style="margin-top: 20px;">
-                <div style="border-radius: 8px;">
+            <div class="mt-5">
+                <div class="rounded-lg">
                     @if ($tasks->isEmpty())
-                        <div style="border: 1px solid #ccc; padding: 10px; text-align: center; margin-bottom: 20px;">
-                            There are no available tasks.
-                        </div>
+                        <div class="border rounded-md lg:p-4 p-1 mb-5 text-center">There are no available tasks.</div>
                     @endif
                     @if ($errors->any())
                         {!! implode(
                             '',
-                            $errors->all(
-                                '<div style="background-color: #dc2626; color: white; padding: 10px; text-align: center; margin-bottom: 20px; border-radius: 4px;">:message</div>',
-                            ),
+                            $errors->all('<div class="bg-red-700 text-white border rounded-md lg:p-4 p-1 mb-5 text-center">:message</div>'),
                         ) !!}
                     @endif
                     @foreach ($tasks as $task)
-                        <div class="task-item" data-id="{{ $task->id }}" data-title="{{ $task->title }}"
-                            data-description="{{ $task->description }}" data-due_date="{{ $task->due_date }}"
-                            style="border: 1px solid #ccc; border-radius: 4px; padding: 15px; margin-bottom: 20px; cursor: pointer;">
-                            <div style="display: flex; justify-content: space-between;">
-                                <p
-                                    style="font-size: 1.125rem; font-weight: bold; text-transform: capitalize; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ $task->title }}
-                                </p>
-                                <div style="display: flex; gap: 10px;">
-                                    {{-- Change Status --}}
-                                    <form action="{{ route('tasks.changeStatus', $task->id) }}" method="POST">
+                        <div class="task-item border rounded-md lg:p-4 p-2 mb-5 cursor-pointer"
+                            data-id="{{ $task->id }}" data-title="{{ $task->title }}"
+                            data-description="{{ $task->description }}" data-due_date="{{ $task->due_date }}">
+                            <div class="flex justify-between">
+                                <p class="text-lg font-bold capitalize truncate">{{ $task->title }}</p>
+
+                                <div class="flex gap-2">
+                                    {{-- change status --}}
+                                    <form @class([])
+                                        action="{{ route('tasks.changeStatus', $task->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
-                                        <select name="status" id="task_status" onchange="this.form.submit()"
-                                            style="padding: 5px; border-radius: 4px; cursor: pointer;
-                                            background-color: {{ $task->status === 'pending' ? '#9ca3af' : 'var(--dimGreen)' }};
-                                            color: {{ $task->status === 'pending' ? 'black' : 'white' }};">
+                                        <select @class([
+                                            'task-status',
+                                            'p-1',
+                                            'rounded-md',
+                                            'cursor-pointer',
+                                            'bg-gray-400' => $task->status === 'pending',
+                                            'bg-dimGreen' => $task->status === 'completed',
+                                            'text-white' => $task->status === 'completed',
+                                            'text-black' => $task->status === 'pending',
+                                        ]) name="status" id="task_status"
+                                            onchange="this.form.submit()">
                                             <option value="pending" {{ $task->status === 'pending' ? 'selected' : '' }}>
-                                                Pending
-                                            </option>
+                                                Pending</option>
                                             <option value="completed"
-                                                {{ $task->status === 'completed' ? 'selected' : '' }}>
-                                                Completed
+                                                {{ $task->status === 'completed' ? 'selected' : '' }}>Completed
                                             </option>
                                         </select>
                                     </form>
                                     {{-- Delete Task --}}
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
-                                        onsubmit="return confirm('Delete this task?');"
-                                        style="cursor: pointer; display: flex; align-items: center;">
+                                    <form class="cursor-pointer my-auto"
+                                        action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                                        onsubmit="return confirm('Delete this task?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" style="border: none; background: none; cursor: pointer;">
-                                            <x-heroicon-o-trash style="width: 20px;" />
+                                        <button type="submit">
+                                            <x-heroicon-o-trash class="w-5 cursor-pointer delete-task"
+                                                data-id="{{ $task->id }}" />
                                         </button>
                                     </form>
+
                                 </div>
                             </div>
                             @if ($task->description)
-                                <p style="color: black; font-size: 0.875rem;">
+                                <p class=" text-black text-sm">
                                     {{ $task->description }}
                                 </p>
                             @endif
-                            <p style="margin-top: 24px; color: #6b7280; font-style: italic;">
+                            <p class="mt-6 text-gray-600 italic">
                                 Due date: {{ \Carbon\Carbon::parse($task->due_date)->format('F j, Y') }}
                             </p>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div class="mt-5">
                 {{ $tasks->onEachSide(1)->links('vendor.pagination.simple-tailwind') }}
             </div>
         </div>
@@ -98,18 +100,18 @@
     <x-task-form action="{{ route('tasks.store') }}" buttonText="Add Task" modalId="createTaskModal"
         headerTitle="Create Task" />
 
-    {{-- Edit Task Modal --}}
+    {{-- edit task modal --}}
     <x-task-form action="" method="PUT" buttonText="Save Changes" modalId="editTaskModal"
         headerTitle="Update Task" />
 
     <script>
         $(document).ready(function() {
             function openModal(id) {
-                document.getElementById(id).style.display = 'block';
+                $(`#${id}`).removeClass('hidden');
             }
 
             function closeModal(id) {
-                document.getElementById(id).style.display = 'none';
+                $(`#${id}`).addClass('hidden');
             }
 
             $('#openCreateModal').on('click', function() {
@@ -145,6 +147,7 @@
             });
         });
     </script>
+
 </body>
 
 </html>
