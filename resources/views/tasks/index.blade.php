@@ -8,8 +8,8 @@
     <title>Simple Task Management Application</title>
 
     {{-- CSS --}}
-    @vite('resources/css/app.css')
-
+    {{-- @vite('resources/css/app.css') --}}
+    <link rel="stylesheet" href="{{ secure_asset(mix('css/app.css')) }}">
     {{-- jQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
