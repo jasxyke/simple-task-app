@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Task;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class TaskService
@@ -26,18 +25,30 @@ class TaskService
 
     public function updateTask(Task $task, array $data): Task
     {
+        // Check if the task exists in the database
+        if (!$task || !$task->exists) {
+            throw new \Exception("Task not found");
+        }
+
         $task->update($data);
         return $task;
     }
 
     public function changeStatus(Task $task, string $status): Task
     {
+        // Check if the task exists in the database
+        if (!$task || !$task->exists) {
+            throw new \Exception("Task not found");
+        }
+
         $task->status = $status;
         $task->save();
+
+        return $task;
     }
 
-    public function deleteTask(Task $task): void
+    public function deleteTask(Task $task): bool
     {
-        $task->delete();
+        return $task->delete();
     }
 }

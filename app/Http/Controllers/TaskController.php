@@ -61,21 +61,29 @@ class TaskController extends Controller
         // $this->taskService->updateTask();
     }
 
-    /**
+ /**
      * Update the specified resource in storage.
      */
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $this->taskService->updateTask($task, $request->validated());
-        return redirect()->route('tasks.index')->with('sucess', 'Task edited successfully!');
+        try {
+            $this->taskService->updateTask($task, $request->validated());
+            return redirect()->route('tasks.index')->with('success', 'Task edited successfully!');
+        } catch (\Exception $e) {
+            return redirect()->route('tasks.index')->with('error', $e->getMessage());
+        }
     }
 
-    // toggle the status of the task
+    // Toggle the status of the task
     public function changeStatus(Request $request, Task $task)
     {
-        $status = $request->input('status');
-        $this->taskService->changeStatus($task, $status);
-        return redirect()->route('tasks.index')->with('success', 'Successfully changed status!');
+        try {
+            $status = $request->input('status');
+            $this->taskService->changeStatus($task, $status);
+            return redirect()->route('tasks.index')->with('success', 'Successfully changed status!');
+        } catch (\Exception $e) {
+            return redirect()->route('tasks.index')->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -83,7 +91,15 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        $this->taskService->deleteTask($task);
-        return redirect()->route('tasks.index')->with('sucess', 'Task deleted successfuly!');
+        try {
+            $isDeleted = $this->taskService->deleteTask($task);
+            if($isDeleted){
+                return redirect()->route('tasks.index')->with('success', 'Task deleted successfully!');
+            }else{
+                return redirect()->route('tasks.index')->withErrors('Task not found.');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('tasks.index')->with('error', $e->getMessage());
+        }
     }
 }
