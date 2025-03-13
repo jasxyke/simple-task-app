@@ -10,7 +10,7 @@
     {{-- CSS --}}
     @vite('resources/css/app.css')
 
-    {{-- jQuery CDN --}}
+    {{-- jQuery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -41,7 +41,7 @@
                                 <p class="text-lg font-bold capitalize truncate">{{ $task->title }}</p>
 
                                 <div class="flex gap-2">
-                                    {{-- toggle status --}}
+                                    {{-- change status --}}
                                     <form @class([])
                                         action="{{ route('tasks.changeStatus', $task->id) }}" method="POST">
                                         @csrf
