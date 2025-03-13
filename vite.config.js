@@ -14,4 +14,8 @@ export default defineConfig({
         https: true,
         host: "https://simple-task-app-iota.vercel.app/",
     },
+    build: {
+        manifest: true,
+        outDir: "public/build", // Ensure assets are built in `public/build`
+    },
 });
