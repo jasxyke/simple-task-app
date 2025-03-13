@@ -12,5 +12,6 @@ export default defineConfig({
     ],
     server: {
         https: true,
+        host: "https://simple-task-app-iota.vercel.app/",
     },
 });
