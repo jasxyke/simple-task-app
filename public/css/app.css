@@ -12,10 +12,10 @@
     --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
-    --primary: "#F1F0E9";
-    --secondary: "#E9762B";
-    --dimGreen: "#41644A";
-    --darkGreen: "#0D4715";
+    --color-primary: #f1f0e9;
+    --color-secondary: #e9762b;
+    --color-dimGreen: #41644a;
+    --color-darkGreen: #0d4715;
 }
 
 :root {
@@ -25,16 +25,24 @@
     --darkGreen: "#0D4715";
 }
 
+/* p {
+    color: #f1f0e9;
+} */
+
 .main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100dvh;
 }
 
 .tasks-table {
-    min-height: 600px;
+    background-color: aqua;
 }
 
 .button {
     padding: 10px 20px;
+
     text-align: center;
     background-color: "#F1F0E9";
 }
