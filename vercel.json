@@ -13,7 +13,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "https://simple-task-app-ten.vercel.app",
+        "APP_URL": "https://simple-task-app-git-main-jasxykes-projects.vercel.app/",
         "APP_KEY": "base64:CsgIe14HvKIAIo+IsBBlZ7ArC9VA9PWsq+lv+11H0w8=",
 
         "APP_CONFIG_CACHE": "/tmp/config.php",
